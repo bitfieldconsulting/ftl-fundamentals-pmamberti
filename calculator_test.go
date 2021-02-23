@@ -65,3 +65,20 @@ func TestMultiply(t *testing.T) {
 	}
 
 }
+
+func TestDivide(t *testing.T) {
+	t.Parallel()
+
+	testCases := []testCase{
+		{a: 100, b: 10, want: 10, name: "Divide a number by another returns a smaller number"},
+	}
+
+	for _, tc := range testCases {
+		got := calculator.Divide(tc.a, tc.b)
+
+		if tc.want != got {
+			t.Errorf("%v - want %f, got %f", tc.name, tc.want, got)
+		}
+
+	}
+}

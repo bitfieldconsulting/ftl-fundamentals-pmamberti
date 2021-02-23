@@ -30,5 +30,4 @@ func TestMultiply(t *testing.T) {
 	if want != got {
 		t.Errorf("want %f, got %f", want, got)
 	}
-
 }

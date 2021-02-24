@@ -2,13 +2,15 @@ package calculator_test
 
 import (
 	"calculator"
+	"fmt"
 	"testing"
 )
 
 type testCase struct {
-	a, b float64
-	want float64
-	name string
+	a, b        float64
+	want        float64
+	name        string
+	errExpected bool
 }
 
 func TestAdd(t *testing.T) {
@@ -70,15 +72,26 @@ func TestDivide(t *testing.T) {
 	t.Parallel()
 
 	testCases := []testCase{
-		{a: 100, b: 10, want: 10, name: "Divide a number by another returns a smaller number"},
+		{a: 4, b: 0, want: 0, errExpected: true, name: "(fail) Error Expected: Division by 0 is not allowed"},
+		{a: 5, b: 2, want: 2.5, errExpected: false, name: "(fail) Not Expecting an Error, got one instead"},
+		{a: 3, b: 1, want: 3, errExpected: false, name: "(fail) Error Expected: wrong result returned"},
+		{a: 100, b: 10, want: 10, errExpected: false, name: "(pass) Divide a number by another returns something"},
 	}
 
 	for _, tc := range testCases {
-		got := calculator.Divide(tc.a, tc.b)
+		got, err := calculator.Divide(tc.a, tc.b)
+		errReceived := err != nil
 
-		if tc.want != got {
-			t.Errorf("%v - want %f, got %f", tc.name, tc.want, got)
+		if tc.errExpected != errReceived {
+			fmt.Printf("Expected test: %s\n", tc.name)
+			t.Fatalf("Divide(%.0f, %.0f: unexpected error status: %v)",
+				tc.a, tc.b, errReceived)
 		}
 
+		if !tc.errExpected && tc.want != got {
+			fmt.Printf("Expected test: %s\n", tc.name)
+			t.Errorf("want %f, got %f", tc.want, got)
+		}
 	}
+
 }

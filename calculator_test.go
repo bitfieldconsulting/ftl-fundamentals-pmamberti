@@ -32,14 +32,14 @@ func TestAdd(t *testing.T) {
 
 func TestAddRandom(t *testing.T) {
 
-	for i := 0; i < 1000; i++ {
+	for i := 0; i < 10000000; i++ {
 		a := rand.Float64()
 		b := rand.Float64()
 		want := a + b
 		got := calculator.Add(a, b)
 
 		if want != got {
-			t.Errorf("Want: %.1f, got %.1f", want, got)
+			t.Errorf("Want: %.2f, got %.2f", want, got)
 		}
 	}
 }
@@ -109,4 +109,32 @@ func TestDivide(t *testing.T) {
 		}
 	}
 
+}
+
+func TestDivideRandom(t *testing.T) {
+
+	for i := 0; i < 100000; i++ {
+		var a float64 = rand.Float64()
+		var b float64 = rand.Float64()
+		errExpected := true
+
+		if b != 0 {
+			errExpected = false
+		}
+
+		got, err := calculator.Divide(a, b)
+		errReceived := err != nil
+
+		if errExpected != errReceived {
+			t.Fatalf("Unexpected Error Status: %v", errReceived)
+		}
+
+		want := a / b
+
+		if !errReceived && want != got {
+			t.Errorf("want %.2f, got %.2f", want, got)
+		}
+
+		fmt.Printf("%.2f / %.2f - ErrRec: %v, ErrExp: %v, => want: %.2f Got: %.2f\n", a, b, errReceived, errExpected, want, got)
+	}
 }

@@ -112,6 +112,7 @@ func TestDivide(t *testing.T) {
 }
 
 func TestDivideRandom(t *testing.T) {
+	t.Parallel()
 
 	for i := 0; i < 100000; i++ {
 		var a float64 = rand.Float64()

@@ -114,13 +114,13 @@ func TestDivide(t *testing.T) {
 func TestDivideRandom(t *testing.T) {
 	t.Parallel()
 
-	for i := 0; i < 100000; i++ {
+	for i := 0; i < 1000; i++ {
 		var a float64 = rand.Float64()
 		var b float64 = rand.Float64()
-		errExpected := true
+		errExpected := false
 
-		if b != 0 {
-			errExpected = false
+		if b == 0 {
+			errExpected = true
 		}
 
 		got, err := calculator.Divide(a, b)
@@ -136,6 +136,30 @@ func TestDivideRandom(t *testing.T) {
 			t.Errorf("want %.2f, got %.2f", want, got)
 		}
 
-		fmt.Printf("%.2f / %.2f - ErrRec: %v, ErrExp: %v, => want: %.2f Got: %.2f\n", a, b, errReceived, errExpected, want, got)
+		// fmt.Printf("%.2f / %.2f - ErrRec: %v, ErrExp: %v, => want: %.2f Got: %.2f\n", a, b, errReceived, errExpected, want, got)
 	}
+}
+
+func TestSqrt(t *testing.T) {
+	t.Parallel()
+
+	testCases := []testCase{
+		{a: 100, want: 10, errExpected: false, name: "Square root of 100 is 10"},
+		{a: 0, want: 0, errExpected: false, name: "Square root of 0 is 0"},
+		{a: -1, want: 999, errExpected: true, name: "Square root can only be calculated for positive numbers"},
+	}
+
+	for _, tc := range testCases {
+		got, err := calculator.Sqrt(tc.a)
+		errReceived := err != nil
+
+		if tc.errExpected != errReceived {
+			t.Fatalf("Unexpected Error - Expected %v, received %v", tc.errExpected, errReceived)
+		}
+
+		if tc.want != got {
+			t.Errorf("Error: want %v, got %v", tc.want, got)
+		}
+	}
+
 }

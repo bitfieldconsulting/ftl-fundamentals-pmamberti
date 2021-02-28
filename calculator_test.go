@@ -31,7 +31,7 @@ func TestAdd(t *testing.T) {
 }
 
 func TestAddRandom(t *testing.T) {
-
+	t.Parallel()
 	for i := 0; i < 10000000; i++ {
 		a := rand.Float64()
 		b := rand.Float64()
@@ -135,8 +135,6 @@ func TestDivideRandom(t *testing.T) {
 		if !errReceived && want != got {
 			t.Errorf("want %.2f, got %.2f", want, got)
 		}
-
-		// fmt.Printf("%.2f / %.2f - ErrRec: %v, ErrExp: %v, => want: %.2f Got: %.2f\n", a, b, errReceived, errExpected, want, got)
 	}
 }
 

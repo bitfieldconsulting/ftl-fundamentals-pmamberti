@@ -7,14 +7,24 @@ import (
 )
 
 // Add takes two numbers and returns the result of adding them together.
-func Add(a, b float64) float64 {
-	return a + b
+func Add(nums ...float64) float64 {
+	var result float64 = nums[0]
+
+	for _, n := range nums[1:] {
+		result = result + n
+	}
+	return result
 }
 
 // Subtract takes two numbers and returns the result of subtracting the second
 // from the first.
-func Subtract(a, b float64) float64 {
-	return a - b
+func Subtract(nums ...float64) float64 {
+	var result float64 = nums[0]
+
+	for _, n := range nums[1:] {
+		result = result - n
+	}
+	return result
 }
 
 // Multiply takes two numbers and returns the result of multiplying them

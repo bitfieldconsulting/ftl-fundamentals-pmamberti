@@ -14,18 +14,25 @@ type testCase struct {
 	errExpected bool
 }
 
+type variadicTestCase struct {
+	nums        []float64
+	want        float64
+	name        string
+	errExpected bool
+}
+
 func TestAdd(t *testing.T) {
 	t.Parallel()
-	testCases := []testCase{
-		{a: 2, b: 2, want: 4, name: "2 + 2 should be 4"},
-		{a: 1, b: 0.2, want: 1.2, name: "Adding decimals should be a breeze"},
-		{a: 5, b: 0, want: 5, name: "Adding 0 returns the same number"},
+	testCases := []variadicTestCase{
+		{nums: []float64{1, 2, 3}, want: 6, name: "1+2+3 = 6"},
+		{nums: []float64{1, 2, 3, 4}, want: 10, name: "1+2+3+4 = 10"},
 	}
 
 	for _, tc := range testCases {
-		got := calculator.Add(tc.a, tc.b)
+		got := calculator.Add(tc.nums...)
+
 		if tc.want != got {
-			t.Errorf("%v - want %f, got %f", tc.name, tc.want, got)
+			t.Errorf("Error: unexpected value returned - want %.1f, got %.1f", tc.want, got)
 		}
 	}
 }
@@ -47,17 +54,17 @@ func TestAddRandom(t *testing.T) {
 func TestSubtract(t *testing.T) {
 	t.Parallel()
 
-	testCases := []testCase{
-		{a: 2, b: 2, want: 0, name: "Subtracting a number to itself returns 0"},
-		{a: 1, b: 0.2, want: 0.8, name: "Subtracting decimals should work, no?"},
-		{a: 5, b: 7, want: -2, name: "Subtracting a bigger value will return a negative result"},
+	testCases := []variadicTestCase{
+		{nums: []float64{3, 2, 1}, want: 0, name: "3 - 2 - 1 = 0"},
+		{nums: []float64{100, 8, 12}, want: 80, name: "100 - 8 - 12 = 10"},
+		{nums: []float64{1, 8, 10}, want: -17, name: "1 - 8 - 10 = -17"},
 	}
 
 	for _, tc := range testCases {
-		got := calculator.Subtract(tc.a, tc.b)
+		got := calculator.Subtract(tc.nums...)
 
 		if tc.want != got {
-			t.Errorf("%v - want %f, got %f", tc.name, tc.want, got)
+			t.Errorf("Error: unexpected value returned - want %.1f, got %.1f", tc.want, got)
 		}
 	}
 }

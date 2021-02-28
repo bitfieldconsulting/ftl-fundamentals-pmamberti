@@ -72,19 +72,18 @@ func TestSubtract(t *testing.T) {
 func TestMultiply(t *testing.T) {
 	t.Parallel()
 
-	testCases := []testCase{
-		{a: 2, b: 1, want: 2, name: "Multiplication by 1 returns the same number"},
-		{a: 10, b: 0.2, want: 2, name: "Multiplication between 0 and 1 will return a smaller number"},
-		{a: 3, b: 0, want: 0, name: "Multiplication by 0 will return 0"},
-		{a: 0, b: 0, want: 0, name: "0 times 0 is still 0"},
-		{a: 8, b: 4, want: 32, name: "Multiplication will return the product of two numbers"},
+	testCases := []variadicTestCase{
+		{nums: []float64{3, 2, 1}, want: 6, name: "3 * 2 * 1 = 6"},
+		{nums: []float64{100, 8, 12}, want: 9600, name: "100 * 8 * 12 = 9600"},
+		{nums: []float64{-2, 8, 10}, want: -160, name: "-1 * 8 * 10 = -160"},
+		{nums: []float64{400, 13, 0, 4}, want: 0, name: "400 * 13 * 0 * 4 = 0"},
 	}
 
 	for _, tc := range testCases {
-		got := calculator.Multiply(tc.a, tc.b)
+		got := calculator.Multiply(tc.nums...)
 
 		if tc.want != got {
-			t.Errorf("%v - want %f, got %f", tc.name, tc.want, got)
+			t.Errorf("Error: unexpected value returned - want %.1f, got %.1f", tc.want, got)
 		}
 	}
 

@@ -28,8 +28,14 @@ func Subtract(nums ...float64) float64 {
 }
 
 // Multiply takes two numbers and returns the result of multiplying them
-func Multiply(a, b float64) float64 {
-	return a * b
+func Multiply(nums ...float64) float64 {
+	var result float64 = 1
+
+	for _, n := range nums {
+		result = result * n
+	}
+
+	return result
 }
 
 // Divide takes two numbers and returns the result of dividing the first by the second

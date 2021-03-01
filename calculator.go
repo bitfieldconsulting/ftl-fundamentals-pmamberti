@@ -39,13 +39,20 @@ func Multiply(nums ...float64) float64 {
 }
 
 // Divide takes two numbers and returns the result of dividing the first by the second
-func Divide(a, b float64) (result float64, err error) {
-	if b != 0 {
-		return a / b, err
+func Divide(nums ...float64) (float64, error) {
+	var result float64 = nums[0]
+	var err error
+
+	for _, n := range nums[1:] {
+		if n == 0 {
+			err = errors.New("Error: division by 0 is not allowed")
+			result = 555
+		}
+		result = result / n
+
 	}
 
-	err = errors.New("you cannot divide by 0")
-	return 555, err
+	return result, err
 }
 
 // Sqrt takes a number and returns its square root

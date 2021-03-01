@@ -92,21 +92,21 @@ func TestMultiply(t *testing.T) {
 func TestDivide(t *testing.T) {
 	t.Parallel()
 
-	testCases := []testCase{
-		{a: 4, b: 0, want: 0, errExpected: true, name: "(fail) Error Expected: Division by 0 is not allowed"},
-		{a: 5, b: 2, want: 2.5, errExpected: false, name: "(fail) Not Expecting an Error, got one instead"},
-		{a: 3, b: 1, want: 3, errExpected: false, name: "(fail) Error Expected: wrong result returned"},
-		{a: 100, b: 10, want: 10, errExpected: false, name: "(pass) Divide a number by another returns something"},
+	testCases := []variadicTestCase{
+		{nums: []float64{7, 0, 10, 44}, want: 999, name: "1 / 8 / -10 = -0.0125", errExpected: true},
+		{nums: []float64{3, 2}, want: 1.5, name: "3 / 2 = 1.5", errExpected: false},
+		{nums: []float64{100, 8, 12}, want: 1.041666667, name: "100 / 8 / 12 = 1.041666667", errExpected: false},
+		{nums: []float64{1, 8, -10}, want: -0.0125, name: "1 / 8 / -10 = -0.0125", errExpected: false},
 	}
 
 	for _, tc := range testCases {
-		got, err := calculator.Divide(tc.a, tc.b)
+		got, err := calculator.Divide(tc.nums...)
 		errReceived := err != nil
 
 		if tc.errExpected != errReceived {
 			fmt.Printf("Expected test: %s\n", tc.name)
-			t.Fatalf("Divide(%.0f, %.0f: unexpected error status: %v)",
-				tc.a, tc.b, errReceived)
+			t.Fatalf("Error: unexpected error status: %v)",
+				errReceived)
 		}
 
 		if !tc.errExpected && tc.want != got {

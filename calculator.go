@@ -3,6 +3,7 @@ package calculator
 
 import (
 	"errors"
+	"fmt"
 	"math"
 )
 
@@ -68,5 +69,21 @@ func Sqrt(a float64) (result float64, err error) {
 // Evaluate takes a string, and returns the result
 // of evaluating the expression in the string
 func Evaluate(s string) (result float64, err error) {
-	return 18.3, nil
+	var a, b float64
+	var operator string
+
+	fmt.Sscanf(s, "%f %s %f", &a, &operator, &b)
+
+	switch operator {
+	case "+":
+		result = Add(a, b)
+	case "-":
+		result = Subtract(a, b)
+	case "*":
+		result = Multiply(a, b)
+	case "/":
+		result, err = Divide(a, b)
+	}
+	return result, err
+
 }

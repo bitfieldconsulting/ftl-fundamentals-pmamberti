@@ -180,22 +180,21 @@ func TestEvaluate(t *testing.T) {
 
 	testCases := []evaluateTestCase{
 		{expression: "11 + 7.3", want: 18.3, errExpected: false},
-		{expression: "1.1 - 7.3", want: -6.2, errExpected: false},
+		{expression: "1.1 - 7.3", want: -6.199999999999999, errExpected: false},
 		{expression: "11 * 2.5", want: 27.5, errExpected: false},
-		{expression: "11 / 7.3", want: 1.506849315, errExpected: false},
-		{expression: " 11      / 0", errExpected: true},
+		{expression: "       11 / 7.3", want: 1.5068493150684932, errExpected: false},
+		{expression: " 11      / 0", want: 999, errExpected: true},
 	}
 
 	for _, tc := range testCases {
 		got, err := calculator.Evaluate(tc.expression)
 		errReceived := err != nil
-		fmt.Println(got, err, tc.expression, errReceived)
 
 		if tc.errExpected != errReceived {
 			t.Fatalf("Unexpected Error - Expected %v, received %v", tc.errExpected, errReceived)
 		}
 
-		if tc.want != got {
+		if !errReceived && tc.want != got {
 			t.Errorf("Error: want %v, got %v", tc.want, got)
 		}
 	}

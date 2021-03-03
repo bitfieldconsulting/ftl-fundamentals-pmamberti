@@ -64,3 +64,9 @@ func Sqrt(a float64) (result float64, err error) {
 	err = errors.New("You need a positive number or this won't work")
 	return 999, err
 }
+
+// Evaluate takes a string, and returns the result
+// of evaluating the expression in the string
+func Evaluate(s string) (result float64, err error) {
+	return 18.3, nil
+}

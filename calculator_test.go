@@ -21,6 +21,12 @@ type variadicTestCase struct {
 	errExpected bool
 }
 
+type evaluateTestCase struct {
+	expression  string
+	want        float64
+	errExpected bool
+}
+
 func TestAdd(t *testing.T) {
 	t.Parallel()
 	testCases := []variadicTestCase{
@@ -95,8 +101,9 @@ func TestDivide(t *testing.T) {
 	testCases := []variadicTestCase{
 		{nums: []float64{7, 0, 10, 44}, want: 999, name: "1 / 8 / -10 = -0.0125", errExpected: true},
 		{nums: []float64{3, 2}, want: 1.5, name: "3 / 2 = 1.5", errExpected: false},
-		{nums: []float64{100, 8, 12}, want: 1.041666667, name: "100 / 8 / 12 = 1.041666667", errExpected: false},
+		{nums: []float64{100, 8, 12}, want: 1.0416666666666667, name: "100 / 8 / 12 = 1.041666667", errExpected: false},
 		{nums: []float64{1, 8, -10}, want: -0.0125, name: "1 / 8 / -10 = -0.0125", errExpected: false},
+		{nums: []float64{10}, want: 10, name: "10 - single value passed", errExpected: false},
 	}
 
 	for _, tc := range testCases {
@@ -111,7 +118,7 @@ func TestDivide(t *testing.T) {
 
 		if !tc.errExpected && tc.want != got {
 			fmt.Printf("Expected test: %s\n", tc.name)
-			t.Errorf("want %f, got %f", tc.want, got)
+			t.Errorf("want %g(%T), got %g(%T)", tc.want, tc.want, got, got)
 		}
 	}
 
@@ -166,4 +173,30 @@ func TestSqrt(t *testing.T) {
 		}
 	}
 
+}
+
+func TestEvaluate(t *testing.T) {
+	t.Parallel()
+
+	testCases := []evaluateTestCase{
+		{expression: "11 + 7.3", want: 18.3, errExpected: false},
+		{expression: "1.1 - 7.3", want: -6.2, errExpected: false},
+		{expression: "11 * 2.5", want: 27.5, errExpected: false},
+		{expression: "11 / 7.3", want: 1.506849315, errExpected: false},
+		{expression: " 11      / 0", errExpected: true},
+	}
+
+	for _, tc := range testCases {
+		got, err := calculator.Evaluate(tc.expression)
+		errReceived := err != nil
+		fmt.Println(got, err, tc.expression, errReceived)
+
+		if tc.errExpected != errReceived {
+			t.Fatalf("Unexpected Error - Expected %v, received %v", tc.errExpected, errReceived)
+		}
+
+		if tc.want != got {
+			t.Errorf("Error: want %v, got %v", tc.want, got)
+		}
+	}
 }

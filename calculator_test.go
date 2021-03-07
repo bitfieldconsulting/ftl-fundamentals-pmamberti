@@ -6,29 +6,13 @@ import (
 	"testing"
 )
 
-type testCase struct {
-	a, b        float64
-	want        float64
-	name        string
-	errExpected bool
-}
-
-type variadicTestCase struct {
-	nums        []float64
-	want        float64
-	name        string
-	errExpected bool
-}
-
-type evaluateTestCase struct {
-	expression  string
-	want        float64
-	errExpected bool
-}
-
 func TestAdd(t *testing.T) {
 	t.Parallel()
-	testCases := []variadicTestCase{
+	testCases := []struct {
+		nums []float64
+		want float64
+		name string
+	}{
 		{nums: []float64{1, 2, 3}, want: 6, name: "1+2+3 = 6"},
 		{nums: []float64{1, 2, 3, 4}, want: 10, name: "1+2+3+4 = 10"},
 	}
@@ -59,7 +43,11 @@ func TestAddRandom(t *testing.T) {
 func TestSubtract(t *testing.T) {
 	t.Parallel()
 
-	testCases := []variadicTestCase{
+	testCases := []struct {
+		nums []float64
+		want float64
+		name string
+	}{
 		{nums: []float64{3, 2, 1}, want: 0, name: "3 - 2 - 1 = 0"},
 		{nums: []float64{100, 8, 12}, want: 80, name: "100 - 8 - 12 = 10"},
 		{nums: []float64{1, 8, 10}, want: -17, name: "1 - 8 - 10 = -17"},
@@ -77,7 +65,11 @@ func TestSubtract(t *testing.T) {
 func TestMultiply(t *testing.T) {
 	t.Parallel()
 
-	testCases := []variadicTestCase{
+	testCases := []struct {
+		nums []float64
+		want float64
+		name string
+	}{
 		{nums: []float64{3, 2, 1}, want: 6, name: "3 * 2 * 1 = 6"},
 		{nums: []float64{100, 8, 12}, want: 9600, name: "100 * 8 * 12 = 9600"},
 		{nums: []float64{-2, 8, 10}, want: -160, name: "-1 * 8 * 10 = -160"},
@@ -97,7 +89,12 @@ func TestMultiply(t *testing.T) {
 func TestDivide(t *testing.T) {
 	t.Parallel()
 
-	testCases := []variadicTestCase{
+	testCases := []struct {
+		nums        []float64
+		want        float64
+		name        string
+		errExpected bool
+	}{
 		{nums: []float64{7, 0, 10, 44}, want: 0, name: "1 / 8 / -10 = -0.0125", errExpected: true},
 		{nums: []float64{3, 2}, want: 1.5, name: "3 / 2 = 1.5", errExpected: false},
 		{nums: []float64{2, 3}, want: 0.6666666666666666, name: "Rational value that doesn't have an exact floating-point representation", errExpected: false},
@@ -151,7 +148,11 @@ func TestDivideRandom(t *testing.T) {
 func TestSqrt(t *testing.T) {
 	t.Parallel()
 
-	testCases := []testCase{
+	testCases := []struct {
+		a, want     float64
+		errExpected bool
+		name        string
+	}{
 		{a: 100, want: 10, errExpected: false, name: "Square root of 100 is 10"},
 		{a: 0, want: 0, errExpected: false, name: "Square root of 0 is 0"},
 		{a: -1, want: 0, errExpected: true, name: "Square root can only be calculated for positive numbers"},
@@ -175,7 +176,11 @@ func TestSqrt(t *testing.T) {
 func TestEvaluate(t *testing.T) {
 	t.Parallel()
 
-	testCases := []evaluateTestCase{
+	testCases := []struct {
+		expression  string
+		want        float64
+		errExpected bool
+	}{
 		{expression: "11 + 7.3", want: 18.3, errExpected: false},
 		{expression: "1.1 - 7.3", want: -6.199999999999999, errExpected: false},
 		{expression: "11 * 2.5", want: 27.5, errExpected: false},

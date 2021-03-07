@@ -166,7 +166,7 @@ func TestSqrt(t *testing.T) {
 		}
 
 		if !errReceived && tc.want != got {
-			t.Errorf("Error: want %v, got %v", tc.want, got)
+			t.Errorf("Sqrt(%g) -  want %v, got %v", tc.a, tc.want, got)
 		}
 	}
 
@@ -192,7 +192,7 @@ func TestEvaluate(t *testing.T) {
 		}
 
 		if !errReceived && tc.want != got {
-			t.Errorf("Error: want %v, got %v", tc.want, got)
+			t.Errorf("%v - want %v, got %v", tc.expression, tc.want, got)
 		}
 	}
 }

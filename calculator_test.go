@@ -101,6 +101,7 @@ func TestDivide(t *testing.T) {
 	testCases := []variadicTestCase{
 		{nums: []float64{7, 0, 10, 44}, want: 999, name: "1 / 8 / -10 = -0.0125", errExpected: true},
 		{nums: []float64{3, 2}, want: 1.5, name: "3 / 2 = 1.5", errExpected: false},
+		{nums: []float64{2, 3}, want: 0.6666666666666666, name: "3 / 2 = 1.5", errExpected: false},
 		{nums: []float64{100, 8, 12}, want: 1.0416666666666667, name: "100 / 8 / 12 = 1.041666667", errExpected: false},
 		{nums: []float64{1, 8, -10}, want: -0.0125, name: "1 / 8 / -10 = -0.0125", errExpected: false},
 		{nums: []float64{10}, want: 10, name: "10 - single value passed", errExpected: false},

@@ -2,7 +2,6 @@ package calculator_test
 
 import (
 	"calculator"
-	"fmt"
 	"math/rand"
 	"testing"
 )
@@ -38,7 +37,7 @@ func TestAdd(t *testing.T) {
 		got := calculator.Add(tc.nums...)
 
 		if tc.want != got {
-			t.Errorf("Error: unexpected value returned - want %.1f, got %.1f", tc.want, got)
+			t.Errorf("%v - want %.1f, got %.1f", tc.name, tc.want, got)
 		}
 	}
 }
@@ -52,7 +51,7 @@ func TestAddRandom(t *testing.T) {
 		got := calculator.Add(a, b)
 
 		if want != got {
-			t.Errorf("Want: %.2f, got %.2f", want, got)
+			t.Errorf("%g + %g - want: %.2f, got %.2f", a, b, want, got)
 		}
 	}
 }
@@ -70,7 +69,7 @@ func TestSubtract(t *testing.T) {
 		got := calculator.Subtract(tc.nums...)
 
 		if tc.want != got {
-			t.Errorf("Error: unexpected value returned - want %.1f, got %.1f", tc.want, got)
+			t.Errorf("%v - want %.1f, got %.1f", tc.name, tc.want, got)
 		}
 	}
 }
@@ -89,7 +88,7 @@ func TestMultiply(t *testing.T) {
 		got := calculator.Multiply(tc.nums...)
 
 		if tc.want != got {
-			t.Errorf("Error: unexpected value returned - want %.1f, got %.1f", tc.want, got)
+			t.Errorf("%v - want %.1f, got %.1f", tc.name, tc.want, got)
 		}
 	}
 
@@ -99,7 +98,7 @@ func TestDivide(t *testing.T) {
 	t.Parallel()
 
 	testCases := []variadicTestCase{
-		{nums: []float64{7, 0, 10, 44}, want: 999, name: "1 / 8 / -10 = -0.0125", errExpected: true},
+		{nums: []float64{7, 0, 10, 44}, want: 0, name: "1 / 8 / -10 = -0.0125", errExpected: true},
 		{nums: []float64{3, 2}, want: 1.5, name: "3 / 2 = 1.5", errExpected: false},
 		{nums: []float64{2, 3}, want: 0.6666666666666666, name: "3 / 2 = 1.5", errExpected: false},
 		{nums: []float64{100, 8, 12}, want: 1.0416666666666667, name: "100 / 8 / 12 = 1.041666667", errExpected: false},
@@ -112,14 +111,11 @@ func TestDivide(t *testing.T) {
 		errReceived := err != nil
 
 		if tc.errExpected != errReceived {
-			fmt.Printf("Expected test: %s\n", tc.name)
-			t.Fatalf("Error: unexpected error status: %v)",
-				errReceived)
+			t.Fatalf("%v - Unexpected error status: %v)", tc.name, errReceived)
 		}
 
 		if !tc.errExpected && tc.want != got {
-			fmt.Printf("Expected test: %s\n", tc.name)
-			t.Errorf("want %g(%T), got %g(%T)", tc.want, tc.want, got, got)
+			t.Errorf("%v - want %g, got %g", tc.name, tc.want, got)
 		}
 	}
 
@@ -141,13 +137,13 @@ func TestDivideRandom(t *testing.T) {
 		errReceived := err != nil
 
 		if errExpected != errReceived {
-			t.Fatalf("Unexpected Error Status: %v", errReceived)
+			t.Fatalf("%g / %g - Unexpected Error Status: %v", a, b, errReceived)
 		}
 
 		want := a / b
 
 		if !errReceived && want != got {
-			t.Errorf("want %.2f, got %.2f", want, got)
+			t.Errorf("%g, %g, want %.2f, got %.2f", a, b, want, got)
 		}
 	}
 }

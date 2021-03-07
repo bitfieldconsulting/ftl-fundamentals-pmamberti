@@ -9,7 +9,7 @@ import (
 
 // Add takes two numbers and returns the result of adding them together.
 func Add(nums ...float64) float64 {
-	var result float64 = nums[0]
+	result := nums[0]
 
 	for _, n := range nums[1:] {
 		result += n
@@ -20,7 +20,7 @@ func Add(nums ...float64) float64 {
 // Subtract takes two numbers and returns the result of subtracting the second
 // from the first.
 func Subtract(nums ...float64) float64 {
-	var result float64 = nums[0]
+	result := nums[0]
 
 	for _, n := range nums[1:] {
 		result -= n
@@ -30,7 +30,7 @@ func Subtract(nums ...float64) float64 {
 
 // Multiply takes two numbers and returns the result of multiplying them
 func Multiply(nums ...float64) float64 {
-	var result float64 = 1
+	result := 1.0
 
 	for _, n := range nums {
 		result *= n
@@ -41,7 +41,7 @@ func Multiply(nums ...float64) float64 {
 
 // Divide takes two numbers and returns the result of dividing the first by the second
 func Divide(nums ...float64) (float64, error) {
-	var result float64 = nums[0]
+	result := nums[0]
 	var err error
 
 	for _, n := range nums[1:] {

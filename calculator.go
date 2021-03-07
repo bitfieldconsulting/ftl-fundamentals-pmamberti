@@ -59,7 +59,7 @@ func Divide(nums ...float64) (float64, error) {
 
 // Sqrt takes a number and returns its square root
 func Sqrt(a float64) (result float64, err error) {
-	if a <= 0 {
+	if a < 0 {
 		err = errors.New("You need a positive number or this won't work")
 		return 0, err
 	}

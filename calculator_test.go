@@ -156,7 +156,7 @@ func TestSqrt(t *testing.T) {
 
 	testCases := []testCase{
 		{a: 100, want: 10, errExpected: false, name: "Square root of 100 is 10"},
-		{a: 0, want: 0, errExpected: true, name: "Square root of 0 is 0"},
+		{a: 0, want: 0, errExpected: false, name: "Square root of 0 is 0"},
 		{a: -1, want: 0, errExpected: true, name: "Square root can only be calculated for positive numbers"},
 	}
 

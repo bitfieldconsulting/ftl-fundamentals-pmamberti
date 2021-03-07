@@ -8,10 +8,10 @@ import (
 )
 
 // Add takes two numbers and returns the result of adding them together.
-func Add(nums ...float64) float64 {
-	result := nums[0]
+func Add(a, b float64, nums ...float64) float64 {
+	result := a + b
 
-	for _, n := range nums[1:] {
+	for _, n := range nums {
 		result += n
 	}
 	return result
@@ -19,18 +19,18 @@ func Add(nums ...float64) float64 {
 
 // Subtract takes two numbers and returns the result of subtracting the second
 // from the first.
-func Subtract(nums ...float64) float64 {
-	result := nums[0]
+func Subtract(a, b float64, nums ...float64) float64 {
+	result := a - b
 
-	for _, n := range nums[1:] {
+	for _, n := range nums {
 		result -= n
 	}
 	return result
 }
 
 // Multiply takes two numbers and returns the result of multiplying them
-func Multiply(nums ...float64) float64 {
-	result := 1.0
+func Multiply(a, b float64, nums ...float64) float64 {
+	result := a * b
 
 	for _, n := range nums {
 		result *= n
@@ -40,13 +40,19 @@ func Multiply(nums ...float64) float64 {
 }
 
 // Divide takes two numbers and returns the result of dividing the first by the second
-func Divide(nums ...float64) (float64, error) {
-	result := nums[0]
-	var err error
+func Divide(a, b float64, nums ...float64) (result float64, err error) {
 
-	for _, n := range nums[1:] {
+	if b == 0 {
+		err = errors.New("Division by 0 is not allowed")
+		result = 0
+		return result, err
+	}
+
+	result = a / b
+
+	for _, n := range nums {
 		if n == 0 {
-			err = errors.New("Error: division by 0 is not allowed")
+			err = errors.New("Division by 0 is not allowed")
 			result = 0
 			return result, err
 		}

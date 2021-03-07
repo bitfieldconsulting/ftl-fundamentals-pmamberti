@@ -9,16 +9,17 @@ import (
 func TestAdd(t *testing.T) {
 	t.Parallel()
 	testCases := []struct {
-		nums []float64
-		want float64
-		name string
+		a, b, want float64
+		nums       []float64
+		name       string
 	}{
-		{nums: []float64{1, 2, 3}, want: 6, name: "1+2+3 = 6"},
-		{nums: []float64{1, 2, 3, 4}, want: 10, name: "1+2+3+4 = 10"},
+		{a: 5, b: 6, nums: []float64{}, want: 11, name: "5 + 6 = 11. Empty nums."},
+		{a: 1, b: 2, nums: []float64{3}, want: 6, name: "1 + 2 + 3 = 6"},
+		{a: 1, b: 2, nums: []float64{3, 4}, want: 10, name: "1 + 2 + 3 + 4 = 10"},
 	}
 
 	for _, tc := range testCases {
-		got := calculator.Add(tc.nums...)
+		got := calculator.Add(tc.a, tc.b, tc.nums...)
 
 		if tc.want != got {
 			t.Errorf("%v - want %.1f, got %.1f", tc.name, tc.want, got)
@@ -44,17 +45,18 @@ func TestSubtract(t *testing.T) {
 	t.Parallel()
 
 	testCases := []struct {
-		nums []float64
-		want float64
-		name string
+		a, b, want float64
+		nums       []float64
+		name       string
 	}{
-		{nums: []float64{3, 2, 1}, want: 0, name: "3 - 2 - 1 = 0"},
-		{nums: []float64{100, 8, 12}, want: 80, name: "100 - 8 - 12 = 10"},
-		{nums: []float64{1, 8, 10}, want: -17, name: "1 - 8 - 10 = -17"},
+		{a: 5, b: 5, nums: []float64{}, want: 0, name: "5 - 5 = 0. Empty nums."},
+		{a: 3, b: 2, nums: []float64{1}, want: 0, name: "3 - 2 - 1 = 0"},
+		{a: 100, b: 8, nums: []float64{1, 12}, want: 79, name: "100 - 8 - 12 = 79"},
+		{a: 1, b: 8, nums: []float64{10}, want: -17, name: "1 - 8 - 10 = -17"},
 	}
 
 	for _, tc := range testCases {
-		got := calculator.Subtract(tc.nums...)
+		got := calculator.Subtract(tc.a, tc.b, tc.nums...)
 
 		if tc.want != got {
 			t.Errorf("%v - want %.1f, got %.1f", tc.name, tc.want, got)
@@ -66,18 +68,19 @@ func TestMultiply(t *testing.T) {
 	t.Parallel()
 
 	testCases := []struct {
-		nums []float64
-		want float64
-		name string
+		a, b, want float64
+		nums       []float64
+		name       string
 	}{
-		{nums: []float64{3, 2, 1}, want: 6, name: "3 * 2 * 1 = 6"},
-		{nums: []float64{100, 8, 12}, want: 9600, name: "100 * 8 * 12 = 9600"},
-		{nums: []float64{-2, 8, 10}, want: -160, name: "-1 * 8 * 10 = -160"},
-		{nums: []float64{400, 13, 0, 4}, want: 0, name: "400 * 13 * 0 * 4 = 0"},
+		{a: 4, b: 11, nums: []float64{}, want: 44, name: "4 * 11 = 44. Empty nums."},
+		{a: 100, b: 8, nums: []float64{12}, want: 9600, name: "100 * 8 * 12 = 9600"},
+		{a: 3, b: 2, nums: []float64{1, -10}, want: -60, name: "3 * 2 * -10 = -60"},
+		{a: 0, b: 10, nums: []float64{55, 10, 2}, want: 0, name: "0 * 10 * 55 * 10 * 2 = 0. 0 passed as first parameter."},
+		{a: 400, b: 13, nums: []float64{0, 4}, want: 0, name: "400 * 13 * 0 * 4 = 0"},
 	}
 
 	for _, tc := range testCases {
-		got := calculator.Multiply(tc.nums...)
+		got := calculator.Multiply(tc.a, tc.b, tc.nums...)
 
 		if tc.want != got {
 			t.Errorf("%v - want %.1f, got %.1f", tc.name, tc.want, got)
@@ -90,21 +93,21 @@ func TestDivide(t *testing.T) {
 	t.Parallel()
 
 	testCases := []struct {
+		a, b, want  float64
 		nums        []float64
-		want        float64
 		name        string
 		errExpected bool
 	}{
-		{nums: []float64{7, 0, 10, 44}, want: 0, name: "1 / 8 / -10 = -0.0125", errExpected: true},
-		{nums: []float64{3, 2}, want: 1.5, name: "3 / 2 = 1.5", errExpected: false},
-		{nums: []float64{2, 3}, want: 0.6666666666666666, name: "Rational value that doesn't have an exact floating-point representation", errExpected: false},
-		{nums: []float64{100, 8, 12}, want: 1.0416666666666667, name: "100 / 8 / 12 = 1.041666667", errExpected: false},
-		{nums: []float64{1, 8, -10}, want: -0.0125, name: "1 / 8 / -10 = -0.0125", errExpected: false},
-		{nums: []float64{10}, want: 10, name: "10 - single value passed", errExpected: false},
+		{a: 7, b: 0, nums: []float64{10, 44}, want: 0, name: "1 / 8 / -10 = -0.0125", errExpected: true},
+		{a: 3, b: 2, nums: []float64{}, want: 1.5, name: "3 / 2 = 1.5", errExpected: false},
+		{a: 2, b: 3, nums: []float64{}, want: 0.6666666666666666, name: "Rational value that doesn't have an exact floating-point representation", errExpected: false},
+		{a: 100, b: 8, nums: []float64{12}, want: 1.0416666666666667, name: "100 / 8 / 12 = 1.041666667", errExpected: false},
+		{a: 1, b: 8, nums: []float64{-10, 2}, want: -0.00625, name: "1 / 8 / -10 = -0.0125", errExpected: false},
+		{a: 10, b: 1, nums: []float64{1}, want: 10, name: "10 / 1", errExpected: false},
 	}
 
 	for _, tc := range testCases {
-		got, err := calculator.Divide(tc.nums...)
+		got, err := calculator.Divide(tc.a, tc.b, tc.nums...)
 		errReceived := err != nil
 
 		if tc.errExpected != errReceived {

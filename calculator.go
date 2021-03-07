@@ -12,7 +12,7 @@ func Add(nums ...float64) float64 {
 	var result float64 = nums[0]
 
 	for _, n := range nums[1:] {
-		result = result + n
+		result += n
 	}
 	return result
 }
@@ -23,7 +23,7 @@ func Subtract(nums ...float64) float64 {
 	var result float64 = nums[0]
 
 	for _, n := range nums[1:] {
-		result = result - n
+		result -= n
 	}
 	return result
 }
@@ -33,7 +33,7 @@ func Multiply(nums ...float64) float64 {
 	var result float64 = 1
 
 	for _, n := range nums {
-		result = result * n
+		result *= n
 	}
 
 	return result
@@ -49,7 +49,7 @@ func Divide(nums ...float64) (float64, error) {
 			err = errors.New("Error: division by 0 is not allowed")
 			result = 555
 		}
-		result = result / n
+		result /= n
 
 	}
 

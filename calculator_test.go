@@ -156,8 +156,8 @@ func TestSqrt(t *testing.T) {
 
 	testCases := []testCase{
 		{a: 100, want: 10, errExpected: false, name: "Square root of 100 is 10"},
-		{a: 0, want: 0, errExpected: false, name: "Square root of 0 is 0"},
-		{a: -1, want: 999, errExpected: true, name: "Square root can only be calculated for positive numbers"},
+		{a: 0, want: 0, errExpected: true, name: "Square root of 0 is 0"},
+		{a: -1, want: 0, errExpected: true, name: "Square root can only be calculated for positive numbers"},
 	}
 
 	for _, tc := range testCases {
@@ -168,7 +168,7 @@ func TestSqrt(t *testing.T) {
 			t.Fatalf("Unexpected Error - Expected %v, received %v", tc.errExpected, errReceived)
 		}
 
-		if tc.want != got {
+		if !errReceived && tc.want != got {
 			t.Errorf("Error: want %v, got %v", tc.want, got)
 		}
 	}

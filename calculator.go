@@ -47,7 +47,8 @@ func Divide(nums ...float64) (float64, error) {
 	for _, n := range nums[1:] {
 		if n == 0 {
 			err = errors.New("Error: division by 0 is not allowed")
-			result = 555
+			result = 0
+			return result, err
 		}
 		result /= n
 
@@ -58,12 +59,11 @@ func Divide(nums ...float64) (float64, error) {
 
 // Sqrt takes a number and returns its square root
 func Sqrt(a float64) (result float64, err error) {
-	if a >= 0 {
-		return math.Sqrt(a), nil
+	if a <= 0 {
+		err = errors.New("You need a positive number or this won't work")
+		return 0, err
 	}
-
-	err = errors.New("You need a positive number or this won't work")
-	return 999, err
+	return math.Sqrt(a), nil
 }
 
 // Evaluate takes a string, and returns the result

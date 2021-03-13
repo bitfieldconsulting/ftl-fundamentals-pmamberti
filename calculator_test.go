@@ -11,8 +11,8 @@ func TestCloseEnough(t *testing.T) {
 		a, b, roundedResult, tolerance float64
 		want                           bool
 	}{
-		{a: 2, b: 3, roundedResult: 0.6666, tolerance: 0.0000001},
-		{a: 2, b: 3, roundedResult: 0.6666, tolerance: 0.00001},
+		{a: 5, b: 3, roundedResult: 1.6666, tolerance: 0.0001},
+		{a: 2, b: 3, roundedResult: 0.6666, tolerance: 0.001},
 	}
 
 	for _, tc := range testCases {
@@ -175,13 +175,14 @@ func TestSqrt(t *testing.T) {
 	t.Parallel()
 
 	testCases := []struct {
-		a, want     float64
-		errExpected bool
-		name        string
+		a, want, tolerance float64
+		errExpected        bool
+		name               string
 	}{
 		{a: 100, want: 10, errExpected: false, name: "Square root of 100 is 10"},
 		{a: 0, want: 0, errExpected: false, name: "Square root of 0 is 0"},
 		{a: -1, want: 0, errExpected: true, name: "Square root can only be calculated for positive numbers"},
+		{a: 3, want: 1.7325, errExpected: false, name: "Floating point rounding for GoodEnough", tolerance: 0.001},
 	}
 
 	for _, tc := range testCases {
@@ -192,8 +193,8 @@ func TestSqrt(t *testing.T) {
 			t.Fatalf("Unexpected Error - Expected %v, received %v", tc.errExpected, errReceived)
 		}
 
-		if !errReceived && tc.want != got {
-			t.Errorf("Sqrt(%g) -  want %v, got %v", tc.a, tc.want, got)
+		if !errReceived && !calculator.CloseEnough(tc.want, got, tc.tolerance) {
+			t.Errorf("Sqrt(%g) -  Result(%g) outside tolerance range(%.9f)", tc.a, tc.want, tc.tolerance)
 		}
 	}
 

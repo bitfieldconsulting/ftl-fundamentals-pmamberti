@@ -6,6 +6,29 @@ import (
 	"testing"
 )
 
+func TestCloseEnough(t *testing.T) {
+	testCases := []struct {
+		a, b, roundedResult, tolerance float64
+		want                           bool
+	}{
+		{a: 2, b: 3, roundedResult: 0.6666, tolerance: 0.0000001},
+		{a: 2, b: 3, roundedResult: 0.6666, tolerance: 0.00001},
+	}
+
+	for _, tc := range testCases {
+
+		result, err := calculator.Divide(tc.a, tc.b)
+		if err != nil {
+			t.Fatalf("%v", err)
+		}
+
+		if !calculator.CloseEnough(tc.roundedResult, result, tc.tolerance) {
+			t.Errorf("Result(%g) outside tolerance range(%.9f)", tc.roundedResult, tc.tolerance)
+		}
+
+	}
+}
+
 func TestAdd(t *testing.T) {
 	t.Parallel()
 	testCases := []struct {

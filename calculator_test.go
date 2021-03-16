@@ -214,6 +214,7 @@ func TestEvaluate(t *testing.T) {
 		{expression: "11 * 2.5", want: 27.5, errExpected: false},
 		{expression: "       11 / 7.3", want: 1.5068493150684932, errExpected: false},
 		{expression: " 11      / 0", want: 999, errExpected: true},
+		{expression: " 11      a 0", want: 999, errExpected: true},
 	}
 
 	for _, tc := range testCases {

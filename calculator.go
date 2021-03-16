@@ -7,13 +7,6 @@ import (
 	"math"
 )
 
-// CloseEnough takes the result of a division between two float-point
-// numbers together with the requested tolerance, and returns true if
-// the rounding is within the tolerance.
-func CloseEnough(roundResult, divisionResult, tolerance float64) bool {
-	return math.Abs(roundResult-divisionResult) <= tolerance
-}
-
 // Add takes two numbers and returns the result of adding them together.
 func Add(a, b float64, nums ...float64) float64 {
 	result := a + b

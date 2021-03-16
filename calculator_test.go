@@ -2,6 +2,7 @@ package calculator_test
 
 import (
 	"calculator"
+	"math"
 	"math/rand"
 	"testing"
 )
@@ -23,7 +24,7 @@ func TestCloseEnough(t *testing.T) {
 			t.Fatalf("%v", err)
 		}
 
-		if !calculator.CloseEnough(tc.roundedResult, result, tc.tolerance) {
+		if !CloseEnough(tc.roundedResult, result, tc.tolerance) {
 			t.Errorf("Result(%g) is not close enough(%.5f)", tc.roundedResult, tc.tolerance)
 		}
 
@@ -229,4 +230,8 @@ func TestEvaluate(t *testing.T) {
 			t.Errorf("%v - want %v, got %v", tc.expression, tc.want, got)
 		}
 	}
+}
+
+func CloseEnough(roundResult, divisionResult, tolerance float64) bool {
+	return math.Abs(roundResult-divisionResult) <= tolerance
 }

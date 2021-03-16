@@ -96,5 +96,4 @@ func Evaluate(s string) (result float64, err error) {
 		err = errors.New("Unknown Operator")
 	}
 	return result, err
-
 }

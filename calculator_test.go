@@ -13,6 +13,7 @@ func TestCloseEnough(t *testing.T) {
 	}{
 		{a: 5, b: 3, roundedResult: 1.6666, tolerance: 0.0001},
 		{a: 2, b: 3, roundedResult: 0.6666, tolerance: 0.001},
+		{a: 1, b: 3, roundedResult: 0.3333, tolerance: 0.01},
 	}
 
 	for _, tc := range testCases {
@@ -23,7 +24,7 @@ func TestCloseEnough(t *testing.T) {
 		}
 
 		if !calculator.CloseEnough(tc.roundedResult, result, tc.tolerance) {
-			t.Errorf("Result(%g) outside tolerance range(%.9f)", tc.roundedResult, tc.tolerance)
+			t.Errorf("Result(%g) is not close enough(%.5f)", tc.roundedResult, tc.tolerance)
 		}
 
 	}
@@ -194,7 +195,7 @@ func TestSqrt(t *testing.T) {
 		}
 
 		if !errReceived && !calculator.CloseEnough(tc.want, got, tc.tolerance) {
-			t.Errorf("Sqrt(%g) -  Result(%g) outside tolerance range(%.9f)", tc.a, tc.want, tc.tolerance)
+			t.Errorf("Sqrt(%g) -  Result(%g) is not close enough(%.9f)", tc.a, tc.want, tc.tolerance)
 		}
 	}
 

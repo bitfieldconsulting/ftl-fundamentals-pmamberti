@@ -12,20 +12,15 @@ func TestCloseEnough(t *testing.T) {
 		a, b, roundedResult, tolerance float64
 		want                           bool
 	}{
-		{a: 5, b: 3, roundedResult: 1.6666, tolerance: 0.0001},
-		{a: 2, b: 3, roundedResult: 0.6666, tolerance: 0.001},
-		{a: 1, b: 3, roundedResult: 0.3333, tolerance: 0.01},
+		{a: 1.66666666, b: 1.6666, tolerance: 0.0001},
+		{a: 0.33333333, b: 0.333, tolerance: 0.001},
+		{a: 0.66666666, b: 0.66, tolerance: 0.01},
 	}
 
 	for _, tc := range testCases {
 
-		result, err := calculator.Divide(tc.a, tc.b)
-		if err != nil {
-			t.Fatalf("%v", err)
-		}
-
-		if !CloseEnough(tc.roundedResult, result, tc.tolerance) {
-			t.Errorf("Result(%g) is not close enough(%.5f)", tc.roundedResult, tc.tolerance)
+		if !CloseEnough(tc.a, tc.b, tc.tolerance) {
+			t.Errorf("Result(%g) is not close enough(%.5f)", tc.b, tc.tolerance)
 		}
 
 	}

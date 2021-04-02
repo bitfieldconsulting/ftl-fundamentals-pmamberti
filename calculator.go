@@ -56,7 +56,7 @@ func Divide(a, b float64, nums ...float64) (result float64, err error) {
 
 	}
 
-	return result, err
+	return result, nil
 }
 
 // Sqrt takes a number and returns its square root
@@ -77,16 +77,14 @@ func Evaluate(s string) (result float64, err error) {
 
 	switch operator {
 	case "+":
-		result = Add(a, b)
+		return Add(a, b), err
 	case "-":
-		result = Subtract(a, b)
+		return Subtract(a, b), err
 	case "*":
-		result = Multiply(a, b)
+		return Multiply(a, b), err
 	case "/":
-		result, err = Divide(a, b)
+		return Divide(a, b)
 	default:
-		result = 0
-		err = errors.New("Unknown Operator")
+		return 0, errors.New("Unknown Operator")
 	}
-	return result, err
 }

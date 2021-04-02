@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestcloseEnough(t *testing.T) {
+func TestCloseEnough(t *testing.T) {
 	testCases := []struct {
 		a, b, roundedResult, tolerance float64
 		want                           bool
@@ -29,31 +29,31 @@ func TestcloseEnough(t *testing.T) {
 func TestAddSubtractMultiply(t *testing.T) {
 	t.Parallel()
 	testCases := []struct {
-		operator   string
+		operator   func(float64, float64, ...float64) float64
 		a, b, want float64
 		nums       []float64
 		name       string
 	}{
-		{operator: "add", a: 5, b: 6, nums: []float64{}, want: 11, name: "5 + 6 = 11. Empty nums."},
-		{operator: "add", a: 0, b: 0, nums: []float64{}, want: 0, name: "0 + 0 = 0. Empty nums."},
-		{operator: "add", a: 1, b: 2, nums: []float64{3}, want: 6, name: "1 + 2 + 3 = 6"},
-		{operator: "add", a: 1, b: 2, nums: []float64{3, 4}, want: 10, name: "1 + 2 + 3 + 4 = 10"},
-		{operator: "subtract", a: 5, b: 5, nums: []float64{}, want: 0, name: "5 - 5 = 0. Empty nums."},
-		{operator: "subtract", a: 3, b: 2, nums: []float64{1}, want: 0, name: "3 - 2 - 1 = 0"},
-		{operator: "subtract", a: 100, b: 8, nums: []float64{1, 12}, want: 79, name: "100 - 8 - 12 = 79"},
-		{operator: "subtract", a: 1, b: 8, nums: []float64{10}, want: -17, name: "1 - 8 - 10 = -17"},
-		{operator: "multiply", a: 4, b: 11, nums: []float64{}, want: 44, name: "4 * 11 = 44. Empty nums."},
-		{operator: "multiply", a: 100, b: 8, nums: []float64{12}, want: 9600, name: "100 * 8 * 12 = 9600"},
-		{operator: "multiply", a: 3, b: 2, nums: []float64{1, -10}, want: -60, name: "3 * 2 * -10 = -60"},
-		{operator: "multiply", a: 0, b: 10, nums: []float64{55, 10, 2}, want: 0, name: "0 * 10 * 55 * 10 * 2 = 0. 0 passed as first parameter."},
-		{operator: "multiply", a: 400, b: 13, nums: []float64{0, 4}, want: 0, name: "400 * 13 * 0 * 4 = 0"},
+		{operator: calculator.Add, a: 5, b: 6, nums: []float64{}, want: 11, name: "5 + 6 = 11. Empty nums."},
+		{operator: calculator.Add, a: 0, b: 0, nums: []float64{}, want: 0, name: "0 + 0 = 0. Empty nums."},
+		{operator: calculator.Add, a: 1, b: 2, nums: []float64{3}, want: 6, name: "1 + 2 + 3 = 6"},
+		{operator: calculator.Add, a: 1, b: 2, nums: []float64{3, 4}, want: 10, name: "1 + 2 + 3 + 4 = 10"},
+		{operator: calculator.Subtract, a: 5, b: 5, nums: []float64{}, want: 0, name: "5 - 5 = 0. Empty nums."},
+		{operator: calculator.Subtract, a: 3, b: 2, nums: []float64{1}, want: 0, name: "3 - 2 - 1 = 0"},
+		{operator: calculator.Subtract, a: 100, b: 8, nums: []float64{1, 12}, want: 79, name: "100 - 8 - 12 = 79"},
+		{operator: calculator.Subtract, a: 1, b: 8, nums: []float64{10}, want: -17, name: "1 - 8 - 10 = -17"},
+		{operator: calculator.Multiply, a: 4, b: 11, nums: []float64{}, want: 44, name: "4 * 11 = 44. Empty nums."},
+		{operator: calculator.Multiply, a: 100, b: 8, nums: []float64{12}, want: 9600, name: "100 * 8 * 12 = 9600"},
+		{operator: calculator.Multiply, a: 3, b: 2, nums: []float64{1, -10}, want: -60, name: "3 * 2 * -10 = -60"},
+		{operator: calculator.Multiply, a: 0, b: 10, nums: []float64{55, 10, 2}, want: 0, name: "0 * 10 * 55 * 10 * 2 = 0. 0 passed as first parameter."},
+		{operator: calculator.Multiply, a: 400, b: 13, nums: []float64{0, 4}, want: 0, name: "400 * 13 * 0 * 4 = 0"},
 	}
 
 	var got float64
 
 	for _, tc := range testCases {
 		switch tc.operator {
-		case "add":
+		case calculator.Add:
 			got = calculator.Add(tc.a, tc.b, tc.nums...)
 		case "subtract":
 			got = calculator.Subtract(tc.a, tc.b, tc.nums...)

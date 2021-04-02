@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestCloseEnough(t *testing.T) {
+func TestcloseEnough(t *testing.T) {
 	testCases := []struct {
 		a, b, roundedResult, tolerance float64
 		want                           bool
@@ -268,6 +268,6 @@ func TestEvaluate(t *testing.T) {
 	}
 }
 
-func CloseEnough(roundResult, divisionResult, tolerance float64) bool {
+func closeEnough(roundResult, divisionResult, tolerance float64) bool {
 	return math.Abs(roundResult-divisionResult) <= tolerance
 }

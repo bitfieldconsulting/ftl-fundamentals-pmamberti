@@ -49,17 +49,8 @@ func TestAddSubtractMultiply(t *testing.T) {
 		{operator: calculator.Multiply, a: 400, b: 13, nums: []float64{0, 4}, want: 0, name: "400 * 13 * 0 * 4 = 0"},
 	}
 
-	var got float64
-
 	for _, tc := range testCases {
-		switch tc.operator {
-		case calculator.Add:
-			got = calculator.Add(tc.a, tc.b, tc.nums...)
-		case "subtract":
-			got = calculator.Subtract(tc.a, tc.b, tc.nums...)
-		case "multiply":
-			got = calculator.Multiply(tc.a, tc.b, tc.nums...)
-		}
+		got := tc.operator(tc.a, tc.b, tc.nums...)
 
 		if tc.want != got {
 			t.Errorf("%v - want %.1f, got %.1f", tc.name, tc.want, got)

@@ -19,7 +19,7 @@ func TestcloseEnough(t *testing.T) {
 
 	for _, tc := range testCases {
 
-		if !CloseEnough(tc.a, tc.b, tc.tolerance) {
+		if !closeEnough(tc.a, tc.b, tc.tolerance) {
 			t.Errorf("Result(%g) is not close enough(%.5f)", tc.b, tc.tolerance)
 		}
 
@@ -231,7 +231,7 @@ func TestSqrt(t *testing.T) {
 			t.Fatalf("Unexpected Error - Expected %v, received %v", tc.errExpected, errReceived)
 		}
 
-		if !errReceived && !CloseEnough(tc.want, got, tc.tolerance) {
+		if !errReceived && !closeEnough(tc.want, got, tc.tolerance) {
 			t.Errorf("Sqrt(%g) -  Result(%g) is not close enough(%.9f)", tc.a, tc.want, tc.tolerance)
 		}
 	}

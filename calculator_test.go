@@ -2,23 +2,36 @@ package calculator_test
 
 import (
 	"calculator"
+	"fmt"
 	"math"
 	"math/rand"
 	"testing"
 )
+
+func closeEnough(
+	roundResult, divisionResult, tolerance float64,
+) bool {
+	fmt.Println(
+		"aaa",
+		math.Abs(roundResult-divisionResult) <= tolerance,
+	)
+	return math.Abs(roundResult-divisionResult) <= tolerance
+}
 
 func TestCloseEnough(t *testing.T) {
 	testCases := []struct {
 		a, b, roundedResult, tolerance float64
 		want                           bool
 	}{
-		{a: 1.66666666, b: 1.6666, tolerance: 0.0001},
-		{a: 0.33333333, b: 0.333, tolerance: 0.001},
-		{a: 0.66666666, b: 0.66, tolerance: 0.01},
+		{a: 1.66666666, b: 1.6666, tolerance: 0.0001, want: true},
+		{a: 0.33333333, b: 0.333, tolerance: 0.001, want: true},
+		{a: 0.66666666, b: 0.66, tolerance: 0.001, want: false},
 	}
 
 	for _, tc := range testCases {
-		if !closeEnough(tc.a, tc.b, tc.tolerance) {
+		got := closeEnough(tc.a, tc.b, tc.tolerance)
+
+		if tc.want != got {
 			t.Errorf(
 				"Result(%g) is not close enough(%.5f)",
 				tc.b,
@@ -543,10 +556,4 @@ func TestEvaluate(t *testing.T) {
 			)
 		}
 	}
-}
-
-func closeEnough(
-	roundResult, divisionResult, tolerance float64,
-) bool {
-	return math.Abs(roundResult-divisionResult) <= tolerance
 }

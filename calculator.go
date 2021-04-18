@@ -85,6 +85,6 @@ func Evaluate(s string) (result float64, err error) {
 	case "/":
 		return Divide(a, b)
 	default:
-		return 0, errors.New("unknown operator")
+		return 0, fmt.Errorf("bad operator %q (must be +, -, * or /)", operator)
 	}
 }

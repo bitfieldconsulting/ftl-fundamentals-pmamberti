@@ -47,13 +47,16 @@ func TestAddSubtractMultiply(t *testing.T) {
 		{operator: calculator.Multiply, a: 3, b: 2, nums: []float64{1, -10}, want: -60, name: "3 * 2 * -10 = -60"},
 		{operator: calculator.Multiply, a: 0, b: 10, nums: []float64{55, 10, 2}, want: 0, name: "0 * 10 * 55 * 10 * 2 = 0. 0 passed as first parameter."},
 		{operator: calculator.Multiply, a: 400, b: 13, nums: []float64{0, 4}, want: 0, name: "400 * 13 * 0 * 4 = 0"},
+		{operator: calculator.Add, a: 1.3, b: 1.5, nums: []float64{}, want: 2.8, name: "1.3 + 1.5 = 2.8"},
+		{operator: calculator.Subtract, a: 1.6, b: 1.5, nums: []float64{}, want: 0.1, name: "1.6 - 1.5 = 0.1"},
+		{operator: calculator.Multiply, a: 1.3, b: 1.1, nums: []float64{}, want: 1.43, name: "1.3 * 1.1 = 1.43"},
 	}
 
 	for _, tc := range testCases {
 		got := tc.operator(tc.a, tc.b, tc.nums...)
 
 		if tc.want != got {
-			t.Errorf("%v - want %.1f, got %.1f", tc.name, tc.want, got)
+			t.Errorf("%v - want %.3f, got %.3f", tc.name, tc.want, got)
 		}
 	}
 }
@@ -259,6 +262,6 @@ func TestEvaluate(t *testing.T) {
 	}
 }
 
-func closeEnough(roundResult, divisionResult, tolerance float64) bool {
-	return math.Abs(roundResult-divisionResult) <= tolerance
+func closeEnough(a, b, tolerance float64) bool {
+	return math.Abs(a-b) <= tolerance
 }

@@ -43,14 +43,14 @@ func Multiply(a, b float64, nums ...float64) float64 {
 func Divide(a, b float64, nums ...float64) (result float64, err error) {
 
 	if b == 0 {
-		return 0, errors.New("Division by 0 is not allowed")
+		return 0, errors.New("division by 0 is not allowed")
 	}
 
 	result = a / b
 
 	for _, n := range nums {
 		if n == 0 {
-			return 0, errors.New("Division by 0 is not allowed")
+			return 0, errors.New("division by 0 is not allowed")
 		}
 		result /= n
 
@@ -62,7 +62,7 @@ func Divide(a, b float64, nums ...float64) (result float64, err error) {
 // Sqrt takes a number and returns its square root
 func Sqrt(a float64) (result float64, err error) {
 	if a < 0 {
-		return 0, errors.New("You need a positive number or this won't work")
+		return 0, fmt.Errorf("invalid number: %v, must be greater than 0", a)
 	}
 	return math.Sqrt(a), nil
 }
@@ -85,6 +85,6 @@ func Evaluate(s string) (result float64, err error) {
 	case "/":
 		return Divide(a, b)
 	default:
-		return 0, errors.New("Unknown Operator")
+		return 0, errors.New("unknown operator")
 	}
 }

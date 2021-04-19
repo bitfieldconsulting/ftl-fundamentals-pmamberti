@@ -160,20 +160,20 @@ func TestAddSubtractMultiply(t *testing.T) {
 		},
 		{
 			operator: calculator.Multiply,
-			a:        1.3,
-			b:        1.1,
+			a:        1.4,
+			b:        1.3,
 			nums:     []float64{},
-			want:     1.43,
-			name:     "1.3 * 1.1 = 1.43",
+			want:     1.82,
+			name:     "1.0 * 1.1 = 1.82",
 		},
 	}
 
 	for _, tc := range testCases {
 		got := tc.operator(tc.a, tc.b, tc.nums...)
 
-		if tc.want != got {
+		if !closeEnough(tc.want, got, 0.0001) {
 			t.Errorf(
-				"%v - want %.3f, got %.3f",
+				"%v - want %g, got %g",
 				tc.name,
 				tc.want,
 				got,
@@ -281,6 +281,13 @@ func TestSubtract(t *testing.T) {
 			b:    8,
 			nums: []float64{10},
 			want: -17,
+		},
+		{
+			name: "1 - 0.8 - 10 = -9.8",
+			a:    1,
+			b:    0.8,
+			nums: []float64{10},
+			want: -9.8,
 		},
 	}
 
